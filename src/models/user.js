@@ -7,7 +7,7 @@ module.exports = class User extends Sequelize.Model {
         type: Sequelize.INTEGER(4),
         defaultValue: 0,
       },
-      id: {
+      email: {
         type: Sequelize.STRING(100),
         allowNull: false,
         unique: true,
@@ -23,11 +23,11 @@ module.exports = class User extends Sequelize.Model {
       },
       profileUrl: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       age: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
       }
     }, {
       sequelize,

@@ -9,9 +9,9 @@ const { sequelize } = require('./models');
 
 const rootRoutes = require('./routes');
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerOption = require('./swagger');
+// const swaggerUi = require('swagger-ui-express');
+// const swaggerJsDoc = require('swagger-jsdoc');
+// const swaggerOption = require('./swagger');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -33,7 +33,7 @@ app.use(cors());
 
 require('./config/passport')(passport);
 
-// app.use('/', rootRoutes);
+app.use('/', rootRoutes);
 
 // const specs = swaggerJsDoc(swaggerOption);
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {explorer: true}));
