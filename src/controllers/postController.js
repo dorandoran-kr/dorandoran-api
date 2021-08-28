@@ -32,7 +32,19 @@ module.exports = {
         ]
       });
 
-      res.json(post);
+      const commentCount = await Comment.count({
+        where: { 
+          PostId: post.id
+        }
+      });
+
+      const likeCount = await Like.count({
+        where: {
+          PostId: post.id
+        }
+      })
+
+      res.json({ post, commentCount, likeCount });
     } catch (error) {
       next(error);
     }
