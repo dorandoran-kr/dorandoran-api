@@ -5,17 +5,17 @@ const { User } = require('../models');
 
 module.exports = {
   join: async (req, res, next) => {
-    const { email, password, nickname, age } = req.body;
+    const { phoneNumber, password, nickname, age } = req.body;
 
     try {
-      const exUser = await User.findOne({ where: { email } });
+      const exUser = await User.findOne({ where: { phoneNumber } });
       if (exUser) {
         return res.status(409).send("이미 존재하는 이메일입니다.");
       }
       const hash = await bcrypt.hash(password, 12);
   
       const u = await User.create({
-        email,
+        phoneNumber,
         nickname,
         password: hash,
         age
@@ -23,7 +23,7 @@ module.exports = {
 
       const payload = {
         id: u.id,
-        email: u.email,
+        phoneNumber: u.phoneNumber,
       };
 
       const token = await jwt.sign(payload, "secret", { expiresIn: 86400 });
@@ -33,24 +33,23 @@ module.exports = {
         token: `Bearer ${token}`,
       })
     } catch (error) {
-      console.error(error);
-      return next(error);
+      next(error);
     }
   },
 
   login: async (req, res, next) => {
-    const { email, password } = req.body;
+    const { phoneNumber, password } = req.body;
 
     try {
       const exUser = await User.findOne({ 
-        where: { email }, 
+        where: { phoneNumber }, 
       });
       if (exUser) {
         const result = await bcrypt.compare(password, exUser.password);
         if (result) {
           const payload = {
             id: exUser.id,
-            email: exUser.email,
+            phoneNumber: exUser.phoneNumber,
           };
 
           jwt.sign(payload, "secret", { expiresIn: 86400 }, (err, token) => {
@@ -67,8 +66,18 @@ module.exports = {
         return res.status(400).send("가입되지 않은 회원입니다.");
       }
     } catch (err) {
-      console.error(err);
-      return next(err);
+      next(err);
     }
   },
+  isPhoneNumberExist: async (req, res, next) => {
+    const { phoneNumber } = req.query;
+
+    try {
+      const exUser = await User.findOne({ where: { phoneNumber } });
+
+      res.json(exUser ? true : false);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

@@ -7,7 +7,7 @@ module.exports = class User extends Sequelize.Model {
         type: Sequelize.INTEGER(4),
         defaultValue: 0,
       },
-      email: {
+      phoneNumber: {
         type: Sequelize.STRING(100),
         allowNull: false,
         unique: true,
