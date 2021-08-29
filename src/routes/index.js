@@ -5,6 +5,7 @@ const categoryRouter = require('./categories');
 const postRouter = require('./posts');
 const commentRouter = require('./comments');
 const likeRouter = require('./likes');
+const uploadRouter = require('./uploads');
 
 const router = express.Router();
 
@@ -14,5 +15,6 @@ router.use('/categories', categoryRouter);
 router.use('/posts', postRouter);
 router.use('/comments', commentRouter);
 router.use('/likes', likeRouter);
+router.use('/uploads', uploadRouter);
 
 module.exports = router;
