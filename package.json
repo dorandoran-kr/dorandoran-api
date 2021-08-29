@@ -30,6 +30,7 @@
     },
     "scripts": {
         "start": "node src/index.js",
-        "test": "mocha --recursive tests --exit"
+        "test": "mocha --recursive tests --exit",
+        "deploy": "pm2 start src/index.js --name dorandoran"
     }
 }
