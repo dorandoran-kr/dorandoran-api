@@ -29,13 +29,18 @@ module.exports = {
     try {
       const { categoryId } = req.params;
 
-      const p = await Post.findAll({
+      const category = await Category.findOne({
+        where: {
+          id: categoryId
+        }
+      })
+      const posts = await Post.findAll({
         where: {
           CategoryId: categoryId 
-        }
+        },
       });
 
-      res.json(p);
+      res.json({ category, posts });
     } catch (error) {
       next(error);
     }
