@@ -27,7 +27,12 @@ module.exports = {
         include: [
           { model: Record },
           { model: Like },
-          { model: Comment },
+          { 
+            model: Comment,
+            include: [
+              { model: User }
+            ]
+          },
           { model: User },
         ]
       });
