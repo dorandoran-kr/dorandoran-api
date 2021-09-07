@@ -79,5 +79,15 @@ module.exports = {
     } catch (error) {
       next(error);
     }
+  },
+  me: async (req, res, next) => {
+    const user = req.user;
+
+    try {
+      // 임시
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
   }
 }
