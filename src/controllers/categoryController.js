@@ -1,4 +1,4 @@
-const { Category, Post } = require("../models");
+const { Category, Post, Question } = require("../models");
 
 module.exports = {
   create: async (req, res, next) => {
@@ -25,7 +25,7 @@ module.exports = {
       next(error);
     }
   },
-  getRelatedPosts: async (req, res, next) => {
+  getRelatedQuestions: async (req, res, next) => {
     try {
       const { categoryId } = req.params;
 
@@ -34,13 +34,13 @@ module.exports = {
           id: categoryId
         }
       })
-      const posts = await Post.findAll({
+      const questions = await Question.findAll({
         where: {
           CategoryId: categoryId 
         },
       });
 
-      res.json({ category, posts });
+      res.json({ category, questions });
     } catch (error) {
       next(error);
     }
