@@ -3,15 +3,20 @@ const { Post, Record, Like, User, Comment } = require("../models");
 module.exports = {
   create: async (req, res, next) => {
     const user = req.user;
-    const { title, description, thumbnailUrl, categoryId } = req.body;
+    const { title, description, thumbnailUrl, questionId, url } = req.body;
 
     try {
       const p = await Post.create({
         title,
         description,
         thumbnailUrl,
-        CategoryId: categoryId,
+        QuestionId: questionId,
         UserId: user.id
+      });
+
+      await Record.create({
+        audio_url: url,
+        PostId: p.id,
       });
 
       res.json(p);
