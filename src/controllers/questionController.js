@@ -19,12 +19,12 @@ module.exports = {
     }
   },
   getQuestions: async (req, res, next) => {
-    const { categoryId } = req.params;
+    const { questionId } = req.params;
 
     try {
       const questions = await Question.findAll({
         where: {
-          CategoryId: categoryId
+          id: questionId
         },
         include: [
           { model: Post }

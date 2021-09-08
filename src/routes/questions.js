@@ -5,7 +5,7 @@ const { isLoggedIn } = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.get('/:categoryId', questionController.getQuestions)
+router.get('/:questionId', questionController.getQuestions)
 router.post('/:categoryId', isLoggedIn, questionController.create);
 
 module.exports = router;
