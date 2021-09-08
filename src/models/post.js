@@ -37,5 +37,6 @@ module.exports = class Post extends Sequelize.Model {
     db.Post.hasMany(db.Record);
     db.Post.belongsTo(db.Category);
     db.Post.belongsTo(db.User);
+    db.Post.belongsTo(db.Question);
   }
 }

@@ -1,4 +1,4 @@
-const { Post, Record, Like, User, Comment } = require("../models");
+const { Post, Record, Like, User, Comment, Question } = require("../models");
 
 module.exports = {
   create: async (req, res, next) => {
@@ -39,6 +39,7 @@ module.exports = {
             ]
           },
           { model: User },
+          { model: Question }
         ]
       });
 
