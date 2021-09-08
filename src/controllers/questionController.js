@@ -1,4 +1,4 @@
-const {Question} = require("../models");
+const {Question, Post} = require("../models");
 
 module.exports = {
   create: async (req, res, next) => {
@@ -25,7 +25,10 @@ module.exports = {
       const questions = await Question.findAll({
         where: {
           CategoryId: categoryId
-        }
+        },
+        include: [
+          { model: Post }
+        ]
       });
       const totalCount = questions.length;
 
