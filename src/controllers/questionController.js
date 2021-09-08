@@ -1,4 +1,4 @@
-const {Question, Post} = require("../models");
+const {Question, Post, User} = require("../models");
 
 module.exports = {
   create: async (req, res, next) => {
@@ -27,7 +27,12 @@ module.exports = {
           id: questionId
         },
         include: [
-          { model: Post }
+          { 
+            model: Post,
+            include: [
+              { model: User }
+            ]
+          }
         ]
       });
       res.json(question);
