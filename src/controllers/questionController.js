@@ -22,7 +22,7 @@ module.exports = {
     const { questionId } = req.params;
 
     try {
-      const questions = await Question.findOne({
+      const question = await Question.findOne({
         where: {
           id: questionId
         },
@@ -30,9 +30,7 @@ module.exports = {
           { model: Post }
         ]
       });
-      const totalCount = questions.length;
-
-      res.json({questions, totalCount});
+      res.json(question);
     } catch (error) {
       next(error);
     }
