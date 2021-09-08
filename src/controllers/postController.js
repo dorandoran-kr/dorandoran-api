@@ -15,7 +15,7 @@ module.exports = {
       });
 
       await Record.create({
-        audio_url: url,
+        audioUrl: url,
         PostId: p.id,
       });
 
