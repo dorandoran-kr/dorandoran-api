@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const passport = require('passport');
 const helmet = require('helmet');
 const cors = require('cors');
+const fs = require('fs');
 
 require('dotenv').config();
 const { sequelize } = require('./models');
@@ -52,8 +53,20 @@ app.use((err, req, res, next) => {
   res.status(404).send(err);
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
+
+if (process.env.ENV == "production") {
+  const options = {
+    ca: fs.readFileSync(`/etc/letsencrypt/live/doran.yummeal.ai/fullchain.pem`),
+    key: fs.readFileSync(`/etc/letsencrypt/live/doran.yummeal.ai/privkey.pem`),
+    cert: fs.readFileSync(`/etc/letsencrypt/live/doran.yummeal.ai/cert.pem`)    
+  }
+
+  http.createServer(app).listen(80);
+  https.createServer(options, app).listen(443);
+} else {
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+  });
+}
 
 module.exports = app;
