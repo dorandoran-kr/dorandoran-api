@@ -1,3 +1,5 @@
+const Sequelize = require('sequelize');
+
 const {Question, Post, User} = require("../models");
 
 module.exports = {
@@ -35,6 +37,14 @@ module.exports = {
           }
         ]
       });
+      res.json(question);
+    } catch (error) {
+      next(error);
+    }
+  },
+  getTodayQuestion: async (req, res, next) => {
+    try {
+      const question = await Question.findAll({ order: Sequelize.literal('rand()'), limit: 1 })
       res.json(question);
     } catch (error) {
       next(error);
