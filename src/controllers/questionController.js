@@ -18,11 +18,11 @@ module.exports = {
       next(error);
     }
   },
-  getQuestions: async (req, res, next) => {
+  getQuestion: async (req, res, next) => {
     const { questionId } = req.params;
 
     try {
-      const questions = await Question.findAll({
+      const questions = await Question.findOne({
         where: {
           id: questionId
         },
