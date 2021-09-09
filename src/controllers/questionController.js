@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 
 const {Question, Post, User} = require("../models");
+const likeService = require('../services/likeService');
 
 module.exports = {
   create: async (req, res, next) => {
@@ -21,10 +22,11 @@ module.exports = {
     }
   },
   getQuestion: async (req, res, next) => {
+    const user = req.user;
     const { questionId } = req.params;
 
     try {
-      const question = await Question.findOne({
+      let question = await Question.findOne({
         where: {
           id: questionId
         },
@@ -37,6 +39,15 @@ module.exports = {
           }
         ]
       });
+
+      question.Posts = await Promise.all(question.Posts.map(async(post) => {
+        let Like = await likeService.hasLike(user, post.id);
+
+        post.dataValues.Like = Like;
+
+        return post;
+      }))
+      
       res.json(question);
     } catch (error) {
       next(error);

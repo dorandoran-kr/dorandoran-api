@@ -1,4 +1,5 @@
 const { Post, Record, Like, User, Comment, Question } = require("../models");
+const likeService = require("../services/likeService");
 
 module.exports = {
   create: async (req, res, next) => {
@@ -26,6 +27,7 @@ module.exports = {
   },
   getPost: async (req, res, next) => {
     try {
+      const user = req.user;
       const { id } = req.params;
       const post = await Post.findOne({
         where: { id },
@@ -43,6 +45,8 @@ module.exports = {
         ]
       });
 
+      const like = await likeService.hasLike(user, post.id);
+
       const commentCount = await Comment.count({
         where: { 
           PostId: post.id
@@ -55,7 +59,7 @@ module.exports = {
         }
       })
 
-      res.json({ post, commentCount, likeCount });
+      res.json({ post, like, commentCount, likeCount });
     } catch (error) {
       next(error);
     }
