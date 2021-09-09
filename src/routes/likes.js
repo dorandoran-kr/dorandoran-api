@@ -5,7 +5,7 @@ const { isLoggedIn } = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.put('/:postId', isLoggedIn, likeController.like);
+router.get('/:postId', isLoggedIn, likeController.like);
 router.delete('/:postId', isLoggedIn, likeController.unlike);
 
 module.exports = router;
