@@ -38,6 +38,9 @@ module.exports = {
         where: {
           CategoryId: categoryId 
         },
+        include: [
+          { model: Post }
+        ]
       });
 
       res.json({ category, questions });
